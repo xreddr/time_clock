@@ -67,7 +67,7 @@ class MyApp(App):
 
     def update_clock(self, *args):
         structtime_obtain = time.localtime()
-        strftime_output = time.strftime("%H:%M:%S", structtime_obtain)
+        strftime_output = time.strftime("%I:%M %p", structtime_obtain)
         self.root.ids.clock_time.text = strftime_output
 
     def build(self):

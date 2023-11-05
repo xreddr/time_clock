@@ -2,17 +2,32 @@
     GridLayout:
         cols: 2
         size: root.width, root.height
-        GridLayout:
-            rows: 2
+        FloatLayout:
+            id: time_half
+            Image:
+                source: 'clifs.gif'
+                size: root.size
+                allow_stretch: True
+                keep_ratio: False
+                anim_delay: 0.07
 
-            # Row
-            Label:
-                id: clock_time
+            GridLayout:
+                rows:2
+                # Row
+                Label:
+                    id: clock_time
+                    font_size: 64
+                    color: 0.3,0.5,0.2,1
 
-            # Row
-            Label:
-                id: clock_viz
-                text: "Data viz"
+                # Row
+                Label:
+                    id: clock_viz
+                    text: "Boring"
+                    size_hint: (1, 1.8)
+
+
+
+
 
         GridLayout:
             cols: 2
