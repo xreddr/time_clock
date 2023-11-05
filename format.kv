@@ -5,6 +5,7 @@
         FloatLayout:
             id: time_half
             Image:
+                id: gif
                 source: 'breeze.gif'
                 size: root.size
                 allow_stretch: True
@@ -35,14 +36,23 @@
             # Row
             ToggleButton:
                 group: 'act'
-                text: "Act1"
+                text: ""
+                background_normal: 'clifs.gif'
+                on_press: root.change_gif('clifs.gif')
+
             ToggleButton:
                 group: 'act'
-                text: "Act2"
+                text: ""
+                background_normal: 'palmcar.gif'
+                on_press: root.change_gif('palmcar.gif')
             # Row
             ToggleButton:
                 group: 'act'
-                text: "Act3"
+                text: ""
+                background_normal: 'palms.gif'
+                on_press: root.change_gif('palms.gif')
             ToggleButton:
                 group: 'act'
-                text: "Act4"
+                text: ""
+                background_normal: 'breeze.gif'
+                on_press: root.change_gif('breeze.gif')

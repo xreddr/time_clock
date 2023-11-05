@@ -50,6 +50,8 @@ Window.size = (800, 480)
 #         self.add_widget(self.clock1)
 
 class MainDisplay(Widget):
+    def change_gif(self, file):
+        self.ids.gif.source = file
     pass
     # time = TimeDisplay()
     # def clock(self):
