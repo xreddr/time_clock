@@ -1,0 +1,33 @@
+<MainDisplay>
+    GridLayout:
+        cols: 2
+        size: root.width, root.height
+        GridLayout:
+            rows: 2
+
+            # Row
+            Label:
+                id: clock_time
+
+            # Row
+            Label:
+                id: clock_viz
+                text: "Data viz"
+
+        GridLayout:
+            cols: 2
+            rows: 2
+            # Row
+            ToggleButton:
+                group: 'act'
+                text: "Act1"
+            ToggleButton:
+                group: 'act'
+                text: "Act2"
+            # Row
+            ToggleButton:
+                group: 'act'
+                text: "Act3"
+            ToggleButton:
+                group: 'act'
+                text: "Act4"
