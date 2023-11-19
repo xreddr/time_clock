@@ -4,8 +4,8 @@ kivy.require('2.2.1')
 from kivy.config import Config
 # Config.set('graphics', 'fullscreen', 1)
 
-# from kivy.app import App
-from kivymd.app import MDApp
+from kivy.app import App
+# from kivymd.app import MDApp
 from kivymd.uix.behaviors.toggle_behavior import MDToggleButton
 from kivymd.uix.button import MDRoundFlatIconButton
 import time
@@ -41,7 +41,7 @@ class MainDisplay(Widget):
         
 
 
-class MyApp(MDApp):
+class MyApp(App):
     def on_start(self):
         Clock.schedule_interval(self.update_clock, 1)
 
