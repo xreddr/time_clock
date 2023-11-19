@@ -1,23 +1,23 @@
 <MainDisplay>
-    GridLayout:
-        cols: 2
+    FloatLayout:
         size: root.width, root.height
-        FloatLayout:
-            id: time_half
-            Image:
-                id: gif
-                source: 'breeze.gif'
-                size: root.size
-                allow_stretch: True
-                keep_ratio: False
-                anim_delay: 0.3
-
+        id: time_half
+        Image:
+            id: gif
+            source: 'breeze.gif'
+            size: root.size
+            allow_stretch: True
+            keep_ratio: False
+            anim_delay: 0.3
+        GridLayout:
+            cols: 2
+            size: root.width, root.height
             GridLayout:
                 rows:2
                 # Row
                 Label:
                     id: clock_time
-                    font_size: 64
+                    font_size: 90
                     color: 0,0,0,1
 
                 # Row
@@ -29,30 +29,102 @@
 
 
 
+            # GridLayout:
+            #     cols: 2
+            #     rows: 2
+            #     pos_hint: {"center_x": .5, "center_y": .5}
+            #     MDToggleButton:
+            #         icon: "breeze.gif"
+            #         pos_hint: {"center_x": .5, "center_y": .5}
+            #         icon_size: "90sp"
+            #         on_press: root.change_gif('clifs.gif')
+            #     MDIconButton:
+            #         icon: "breeze.gif"
+            #         pos_hint: {"center_x": .5, "center_y": .5}
+            #     MDIconButton:
+            #         icon: "breeze.gif"
+            #         pos_hint: {"center_x": .5, "center_y": .5}
+            #     MDIconButton:
+            #         icon: "breeze.gif"
+            #         pos_hint: {"center_x": .5, "center_y": .5}
+            GridLayout:
+                cols: 2
+                rows: 2
+                # Row
+                FloatLayout:                    
+                    ToggleButton:
+                        size: self.height, self.height
+                        size_hint: 0.7, 0.7
+                        pos_hint: {'center_x': .5, 'center_y': .5}
+                        group: 'act'
+                        text: ""
+                        background_color: (0,0,0,0) if self.state == 'normal' else (0,0,0,0)
+                        background_normal: ""
+                        on_press: root.change_gif('clifs.gif', (0,0,0,1))
+                        canvas:
+                            RoundedRectangle:
+                                pos: self.pos
+                                size: self.height, self.height
+                                source: 'clifs.gif'
+                                radius: [180]
+                FloatLayout:
+                    ToggleButton:
+                        size: self.height, self.height
+                        size_hint: 0.7, 0.7
+                        pos_hint: {'center_x': .45, 'center_y': .5}
+                        group: 'act'
+                        text: ""
+                        background_color: (0,0,0,0) if self.state == 'normal' else (0,0,0,0)
+                        background_normal: ""
+                        on_press: root.change_gif('palmcar.gif', (1,1,1,1))
+                        canvas:
+                            RoundedRectangle:
+                                pos: self.pos
+                                size: self.height, self.height
+                                source: 'palmcar.gif'
+                                radius: [180]
+                # Row
+                FloatLayout:
+                    ToggleButton:
+                        size: self.height, self.height
+                        size_hint: 0.7, 0.7
+                        pos_hint: {'center_x': .5, 'center_y': .5}
+                        group: 'act'
+                        text: ""
+                        background_color: (0,0,0,0) if self.state == 'normal' else (0,0,0,0)
+                        background_normal: ""
+                        on_press: root.change_gif('palms.gif', (1,1,1,1))
+                        canvas:
+                            RoundedRectangle:
+                                pos: self.pos
+                                size: self.height, self.height
+                                source: 'palms.gif'
+                                radius: [180]
+                FloatLayout:
+                    ToggleButton:
+                        size: self.height, self.height
+                        size_hint: 0.7, 0.7
+                        pos_hint: {'center_x': .45, 'center_y': .5}
+                        group: 'act'
+                        text: ""
+                        background_color: (0,0,0,0) if self.state == 'normal' else (0,0,0,0)
+                        background_normal: ""
+                        on_press: root.change_gif('breeze.gif', (0,0,0,1))
+                        canvas:
+                            RoundedRectangle:
+                                pos: self.pos
+                                size: self.height, self.height
+                                source: 'breeze.gif'
+                                radius: [180]
 
-        GridLayout:
-            cols: 2
-            rows: 2
-            # Row
-            ToggleButton:
-                group: 'act'
-                text: ""
-                background_normal: 'clifs.gif'
-                on_press: root.change_gif('clifs.gif')
-
-            ToggleButton:
-                group: 'act'
-                text: ""
-                background_normal: 'palmcar.gif'
-                on_press: root.change_gif('palmcar.gif')
-            # Row
-            ToggleButton:
-                group: 'act'
-                text: ""
-                background_normal: 'palms.gif'
-                on_press: root.change_gif('palms.gif')
-            ToggleButton:
-                group: 'act'
-                text: ""
-                background_normal: 'breeze.gif'
-                on_press: root.change_gif('breeze.gif')
+<RoundedToggleButton@ToggleButton>
+    # background_color: (1,0,0,1)
+    # canvas.before:
+    #     Color:
+    #         rgba: (0, 0, 0, 0)
+    #     RoundedRectangle:
+    #         source: 'breeze.gif'
+    #         size: self.size
+    #         pos: self.pos
+    #         radius: [180,]
+        
