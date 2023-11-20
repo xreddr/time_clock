@@ -32,20 +32,25 @@
                 # Row
                 FloatLayout:                    
                     ToggleButton:
+                        id: act1
                         size: self.height, self.height
                         size_hint: 0.7, 0.7
                         pos_hint: {'center_x': .5, 'center_y': .5}
                         group: 'act'
                         text: ""
-                        background_color: (0,0,0,0) if self.state == 'normal' else (0,0,0,0)
+                        font_size: 16
+                        background_color: (0,0,0,0) if self.state == 'normal' else (1,0,0,1)
                         background_normal: ""
-                        on_press: root.change_gif('clifs.gif', (0,0,0,1))
-                        canvas:
+                        background_down: ""
+                        # on_press: root.change_gif('clifs.gif', (0,0,0,1))
+                        on_press: root.act1()
+                        canvas.before:
                             RoundedRectangle:
                                 pos: self.pos
                                 size: self.height, self.height
                                 source: 'clifs.gif'
                                 radius: [180]
+                                # texture: self.text
                 FloatLayout:
                     ToggleButton:
                         size: self.height, self.height

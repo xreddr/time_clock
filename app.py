@@ -17,27 +17,41 @@ from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
+from kivy.uix.behaviors import ButtonBehavior
 
 Builder.load_file('format.kv')
 
 # Window size
-# Window.size = (800, 480)
-Window.fullscreen = True
+Window.size = (800, 480)
+# Window.fullscreen = True
 
 
 class MainDisplay(Widget):
+    start_1 = ''
+    tot_1 = ''
+
     def change_gif(self, file, color):
         self.ids.gif.source = file
         self.ids.clock_time.color = color
 
     def act1(self):
+        self.start_1 = time.time()
         Clock.schedule_interval(self.timer1, 0.1)
+    
+    def stop1(self):
+        self.ids.act1.state = 'normal'
 
     def timer1(self, *args):
-        start = time.time()
-        elapsed = time.time() - start
-        print(elapsed)
-        self.ids.act1.text = str(elapsed)
+        print(self.ids.act1.state)
+        if self.ids.act1.state == 'down':
+            start = self.start_1
+            elapsed = time.time() - start
+            # print(elapsed)
+            if self.tot_1 != '':
+                self.tot_1 = self.tot_1 + elapsed
+            else:
+                self.tot_1 = elapsed
+            self.ids.act1.text = str(self.tot_1)
         
 
 
