@@ -27,31 +27,49 @@ Window.size = (800, 480)
 
 
 class MainDisplay(Widget):
-    start_1 = ''
-    tot_1 = ''
+    start = ''
+    tot = float(0)
+    elapsed = ''
+    event = ''
 
     def change_gif(self, file, color):
         self.ids.gif.source = file
         self.ids.clock_time.color = color
 
     def act1(self):
-        self.start_1 = time.time()
-        Clock.schedule_interval(self.timer1, 0.1)
+        if self.ids.act1.state == 'down':
+            self.start = time.time()
+            print(f'Down {self.convert_time(self.start)}')
+            self.event = Clock.schedule_interval(self.timer1, 1)
+        elif self.ids.act1.state == 'normal':
+            self.event.cancel()
+            self.tot = self.tot + self.elapsed
+            print(self.tot)
+            self.elapsed = float(0)
     
     def stop1(self):
         self.ids.act1.state = 'normal'
 
     def timer1(self, *args):
-        print(self.ids.act1.state)
-        if self.ids.act1.state == 'down':
-            start = self.start_1
-            elapsed = time.time() - start
-            # print(elapsed)
-            if self.tot_1 != '':
-                self.tot_1 = self.tot_1 + elapsed
-            else:
-                self.tot_1 = elapsed
-            self.ids.act1.text = str(self.tot_1)
+        if self.ids.act1.state == 'normal':
+            print('up')
+            self.event.cancel()
+            self.tot = self.tot + self.elapsed
+            print(self.tot)
+            self.elapsed = float(0)
+        else:
+            self.elapsed = time.time() - self.start
+            print(self.tot, self.elapsed)
+            # self.tot += self.elapsed
+            self.ids.act1.text = str(self.convert_time(self. tot + self.elapsed))
+
+    def convert_time(self, sec):
+        mins = sec // 60
+        sec = sec % 60
+        hours = mins // 60
+        mins = mins % 60
+        string_time = f'{int(hours)}:{int(mins)}:{int(sec)}'
+        return string_time
         
 
 
@@ -61,7 +79,7 @@ class MyApp(App):
 
     def update_clock(self, *args):
         structtime_obtain = time.localtime()
-        strftime_output = time.strftime("%I:%M %p", structtime_obtain)
+        strftime_output = time.strftime("%I:%M:%S %p", structtime_obtain)
         self.root.ids.clock_time.text = strftime_output
 
     def build(self):
