@@ -61,7 +61,7 @@ class MainDisplay(Widget):
             self.elapsed = time.time() - self.start
             print(self.tot, self.elapsed)
             # self.tot += self.elapsed
-            self.ids.act1.text = str(self.convert_time(self. tot + self.elapsed))
+            self.ids.act1.text = str(self.convert_time(self.tot + self.elapsed))
 
     def convert_time(self, sec):
         mins = sec // 60
