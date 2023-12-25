@@ -19,6 +19,9 @@ from kivy.lang import Builder
 from kivy.uix.widget import Widget
 from kivy.uix.behaviors import ButtonBehavior
 
+# General Imports
+import json
+
 Builder.load_file('format.kv')
 
 # Window size
@@ -27,13 +30,16 @@ Window.size = (800, 480)
 
 
 class MainDisplay(Widget):
+    lap = {
+        "lapnum" : 1,
+        "lapact" : None,
+        "start" : None,
+        "stop" : None,
+        "total" : None
+    }
     base = {
         "total" : float(0),
-        "laps" : {
-            "start" : "",
-            "stop" : "",
-            "total" : ""
-        }
+        "laps" : []
     }
     act_totals = {
         "act1" : base,
@@ -41,10 +47,6 @@ class MainDisplay(Widget):
         "act3" : base,
         "act4" : base
     }
-    start = ''
-    lapnum = 1
-    lapact = 0
-    elapsed = ''
     event = ''
 
     def change_gif(self, file, color):
@@ -53,31 +55,31 @@ class MainDisplay(Widget):
 
     def act(self, act):
         if getattr(self.ids, "act" + act).state == 'down':
-            self.start = time.time()
-            print(f'Down {self.convert_time(self.start)}')
-            self.lapact = act
-            self.event = Clock.schedule_interval(getattr(self, "timer" + act), 1)
+            self.lap.update({"start" : time.time()})
+            self.lap.update({"lapact" : act})
+            # print(f'Down {self.convert_time(self.lap["start"])}')
+            self.event = Clock.schedule_interval(self.timer, 1)
         elif getattr(self.ids, "act" + act).state == 'normal':
-            self.event.cancel()
-             = self.tot + self.elapsed
-            print(self.tot)
-            self.elapsed = float(0)
-    
-    def stop1(self):
-        self.ids.act1.state = 'normal'
+            self.log_lap(self.lap["lapact"])
 
-    def timer1(self, *args):
-        if self.ids.act1.state == 'normal':
-            print('up')
-            self.event.cancel()
-            self.tot = self.tot + self.elapsed
-            print(self.tot)
-            self.elapsed = float(0)
-        else:
-            self.elapsed = time.time() - self.start
-            print(self.tot, self.elapsed)
-            # self.tot += self.elapsed
-            getattr(self.ids, "act" + self.lapact).text = str(self.convert_time(self.tot + self.elapsed))
+    def log_lap(self, act):
+        self.event.cancel()
+        self.lap.update({"stop" : time.time()})
+        self.lap.update({"total" : self.lap["stop"] - self.lap["start"]})
+        # key = f"act{str(act)}"
+        # print(str(key))
+        self.act_totals["act1"]["laps"].append(self.lap)
+        self.lap.update({"lapnum" : self.lap["lapnum"] + 1,
+                        "lapact" : None,
+                        "start" : None,
+                        "stop" : None,
+                        "total" : None})
+
+    def timer(self, *args):
+        self.lap.update({"total" : time.time() - self.lap["start"]})
+        tots_obj = json.dumps(self.act_totals, indent=2)
+        print(tots_obj)
+        getattr(self.ids, "act" + self.lap["lapact"]).text = str(self.convert_time(self.lap["total"]))
 
     def convert_time(self, sec):
         mins = sec // 60
