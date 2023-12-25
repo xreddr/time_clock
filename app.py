@@ -27,8 +27,23 @@ Window.size = (800, 480)
 
 
 class MainDisplay(Widget):
+    base = {
+        "total" : float(0),
+        "laps" : {
+            "start" : "",
+            "stop" : "",
+            "total" : ""
+        }
+    }
+    act_totals = {
+        "act1" : base,
+        "act2" : base,
+        "act3" : base,
+        "act4" : base
+    }
     start = ''
-    tot = float(0)
+    lapnum = 1
+    lapact = 0
     elapsed = ''
     event = ''
 
@@ -36,14 +51,15 @@ class MainDisplay(Widget):
         self.ids.gif.source = file
         self.ids.clock_time.color = color
 
-    def act1(self):
-        if self.ids.act1.state == 'down':
+    def act(self, act):
+        if getattr(self.ids, "act" + act).state == 'down':
             self.start = time.time()
             print(f'Down {self.convert_time(self.start)}')
-            self.event = Clock.schedule_interval(self.timer1, 1)
-        elif self.ids.act1.state == 'normal':
+            self.lapact = act
+            self.event = Clock.schedule_interval(getattr(self, "timer" + act), 1)
+        elif getattr(self.ids, "act" + act).state == 'normal':
             self.event.cancel()
-            self.tot = self.tot + self.elapsed
+             = self.tot + self.elapsed
             print(self.tot)
             self.elapsed = float(0)
     
@@ -61,7 +77,7 @@ class MainDisplay(Widget):
             self.elapsed = time.time() - self.start
             print(self.tot, self.elapsed)
             # self.tot += self.elapsed
-            self.ids.act1.text = str(self.convert_time(self.tot + self.elapsed))
+            getattr(self.ids, "act" + self.lapact).text = str(self.convert_time(self.tot + self.elapsed))
 
     def convert_time(self, sec):
         mins = sec // 60
