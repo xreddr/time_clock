@@ -28,6 +28,12 @@ Builder.load_file('format.kv')
 Window.size = (800, 480)
 # Window.fullscreen = True
 
+act_totals = {
+    "act1" : {"laps": []},
+    "act2" : {"laps": []},
+    "act3" : {"laps": []},
+    "act4" : {"laps": []}
+}
 
 class MainDisplay(Widget):
     lap = {
@@ -37,21 +43,8 @@ class MainDisplay(Widget):
         "stop" : None,
         "total" : None
     }
-    base = {
-        "total" : float(0),
-        "laps" : []
-    }
-    act_totals = {
-        "act1" : base,
-        "act2" : base,
-        "act3" : base,
-        "act4" : base
-    }
-    event = ''
 
-    def change_gif(self, file, color):
-        self.ids.gif.source = file
-        self.ids.clock_time.color = color
+    event = ''
 
     def act(self, act):
         if getattr(self.ids, "act" + act).state == 'down':
@@ -66,20 +59,26 @@ class MainDisplay(Widget):
         self.event.cancel()
         self.lap.update({"stop" : time.time()})
         self.lap.update({"total" : self.lap["stop"] - self.lap["start"]})
-        # key = f"act{str(act)}"
-        # print(str(key))
-        self.act_totals["act1"]["laps"].append(self.lap)
-        self.lap.update({"lapnum" : self.lap["lapnum"] + 1,
-                        "lapact" : None,
-                        "start" : None,
-                        "stop" : None,
-                        "total" : None})
+        lap = {
+            "lapnum" : self.lap['lapnum'],
+            "lapact" : self.lap['lapact'],
+            "start" : self.lap['start'],
+            "stop" : self.lap['stop'],
+            "total" : self.lap['total']
+        }
+        act_totals[f'act{self.lap["lapact"]}']["laps"].append(lap)
+        # getattr(act_totals, "act" + self.lap["lapact"])["laps"].append(lap)
+        self.lap.update({"lapnum" : self.lap["lapnum"] + 1})
 
     def timer(self, *args):
-        self.lap.update({"total" : time.time() - self.lap["start"]})
-        tots_obj = json.dumps(self.act_totals, indent=2)
-        print(tots_obj)
-        getattr(self.ids, "act" + self.lap["lapact"]).text = str(self.convert_time(self.lap["total"]))
+        if getattr(self.ids, "act" + self.lap["lapact"]).state == 'down':
+            self.lap.update({"total" : time.time() - self.lap["start"]})
+            tots_obj = json.dumps(act_totals, indent=2)
+            print(tots_obj)
+            getattr(self.ids, "act" + self.lap["lapact"]).text = str(self.convert_time(self.lap["total"]))
+        elif getattr(self.ids, "act" + self.lap["lapact"]).state == 'normal':
+            self.log_lap(self.lap["lapact"])
+
 
     def convert_time(self, sec):
         mins = sec // 60

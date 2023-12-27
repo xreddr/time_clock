@@ -1,19 +1,28 @@
 <MainDisplay>
-    FloatLayout:
+    # FloatLayout:
+    #     size: root.width, root.height
+    #     id: time_half
+    #     Image:
+    #         id: gif
+    #         source: 'breeze.gif'
+    #         size: root.size
+    #         allow_stretch: True
+    #         keep_ratio: False
+    #         anim_delay: 0.3
+    GridLayout:
+        cols: 2
         size: root.width, root.height
-        id: time_half
-        Image:
-            id: gif
-            source: 'breeze.gif'
-            size: root.size
-            allow_stretch: True
-            keep_ratio: False
-            anim_delay: 0.3
         GridLayout:
-            cols: 2
-            size: root.width, root.height
-            GridLayout:
-                rows:2
+            rows:2
+            size_hint: root.width * 0.8, root.height
+            FloatLayout:
+                Image:
+                    id: gif
+                    source: 'breeze.gif'
+                    size: root.size
+                    allow_stretch: True
+                    keep_ratio: False
+                    anim_delay: 0.3
                 # Row
                 Label:
                     id: clock_time
@@ -24,81 +33,65 @@
                 Label:
                     id: clock_viz
                     text: "Boring"
-                    size_hint: (1, 1.8)
+                    # size_hint: (1, 1.8)
 
-            GridLayout:
-                cols: 2
-                rows: 2
-                # Row
-                FloatLayout:                    
-                    ToggleButton:
-                        id: act1
-                        size: self.height, self.height
-                        size_hint: 0.7, 0.7
-                        pos_hint: {'center_x': .5, 'center_y': .5}
-                        group: 'act'
-                        text: ""
-                        font_size: 16
-                        background_color: (0,0,0,0) if self.state == 'normal' else (1,0,0,1)
-                        background_normal: ""
-                        background_down: ""
-                        # on_press: root.change_gif('clifs.gif', (0,0,0,1))
-                        on_press: root.act("1")
-                        canvas.before:
-                            RoundedRectangle:
-                                pos: self.pos
-                                size: self.height, self.height
-                                source: 'clifs.gif'
-                                radius: [180]
-                                # texture: self.text
-                FloatLayout:
-                    ToggleButton:
-                        size: self.height, self.height
-                        size_hint: 0.7, 0.7
-                        pos_hint: {'center_x': .45, 'center_y': .5}
-                        group: 'act'
-                        text: ""
-                        background_color: (0,0,0,0) if self.state == 'normal' else (0,0,0,0)
-                        background_normal: ""
-                        on_press: root.change_gif('palmcar.gif', (1,1,1,1))
-                        canvas:
-                            RoundedRectangle:
-                                pos: self.pos
-                                size: self.height, self.height
-                                source: 'palmcar.gif'
-                                radius: [180]
-                # Row
-                FloatLayout:
-                    ToggleButton:
-                        size: self.height, self.height
-                        size_hint: 0.7, 0.7
-                        pos_hint: {'center_x': .5, 'center_y': .5}
-                        group: 'act'
-                        text: ""
-                        background_color: (0,0,0,0) if self.state == 'normal' else (0,0,0,0)
-                        background_normal: ""
-                        on_press: root.change_gif('palms.gif', (1,1,1,1))
-                        canvas:
-                            RoundedRectangle:
-                                pos: self.pos
-                                size: self.height, self.height
-                                source: 'palms.gif'
-                                radius: [180]
-                FloatLayout:
-                    ToggleButton:
-                        size: self.height, self.height
-                        size_hint: 0.7, 0.7
-                        pos_hint: {'center_x': .45, 'center_y': .5}
-                        group: 'act'
-                        text: ""
-                        background_color: (0,0,0,0) if self.state == 'normal' else (0,0,0,0)
-                        background_normal: ""
-                        on_press: root.change_gif('breeze.gif', (0,0,0,1))
-                        canvas:
-                            RoundedRectangle:
-                                pos: self.pos
-                                size: self.height, self.height
-                                source: 'breeze.gif'
-                                radius: [180]
+        GridLayout:
+            cols: 1
+            rows: 4
+            # Row
+            size_hint: root.width * 0.2, root.height
+            ToggleButton:
+                id: act1
+                size: self.height, self.height
+                # size_hint: 0.7, 0.7
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                group: 'act'
+                text: ""
+                font_size: 16
+                background_color: (0,0,1,1) if self.state == 'normal' else (1,0,0,1)
+                background_normal: ""
+                background_down: ""
+                on_press: root.act("1")
+
+            ToggleButton:
+                id: act2
+                size: self.height, self.height
+                # size_hint: 0.7, 0.7
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                group: 'act'
+                text: ""
+                font_size: 16
+                background_color: (0,0,1,1) if self.state == 'normal' else (1,0,0,1)
+                background_normal: ""
+                background_down: ""
+                on_press: root.act("2")
+
+        # Row
+            ToggleButton:
+                id: act3
+                size: self.height, self.height
+                # size_hint: 0.7, 0.7
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                group: 'act'
+                text: ""
+                font_size: 16
+                background_color: (0,0,1,1) if self.state == 'normal' else (1,0,0,1)
+                background_normal: ""
+                background_down: ""
+                on_press: root.act("3")
+
+            ToggleButton:
+                id: act4
+                size: self.height, self.height
+                # size_hint: 0.7, 0.7
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                group: 'act'
+                text: ""
+                font_size: 16
+                background_color: (0,0,1,1) if self.state == 'normal' else (1,0,0,1)
+                background_normal: ""
+                background_down: ""
+                on_press: root.act("4")
+
 
         
