@@ -5,19 +5,11 @@ from kivy.config import Config
 # Config.set('graphics', 'fullscreen', 1)
 
 from kivy.app import App
-# from kivymd.app import MDApp
-from kivymd.uix.behaviors.toggle_behavior import MDToggleButton
-from kivymd.uix.button import MDRoundFlatIconButton
 import time
-# Widget elements
-# from kivy.uix.gridlayout import GridLayout
-# from kivy.uix.label import Label
-# from kivy.uix.textinput import TextInput
 from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
-from kivy.uix.behaviors import ButtonBehavior
 
 # General Imports
 import json
@@ -47,13 +39,11 @@ class MainDisplay(Widget):
     event = ''
 
     def act(self, act):
-        if getattr(self.ids, "act" + act).state == 'down':
-            self.lap.update({"start" : time.time()})
-            self.lap.update({"lapact" : act})
-            # print(f'Down {self.convert_time(self.lap["start"])}')
-            self.event = Clock.schedule_interval(self.timer, 1)
-        elif getattr(self.ids, "act" + act).state == 'normal':
-            self.log_lap(self.lap["lapact"])
+        if self.lap['lapact'] != None:
+            self.log_lap(self.lap['lapact'])
+        self.lap.update({"start" : time.time()})
+        self.lap.update({"lapact" : act})
+        self.event = Clock.schedule_interval(self.timer, 1)
 
     def log_lap(self, act):
         self.event.cancel()
@@ -67,18 +57,19 @@ class MainDisplay(Widget):
             "total" : self.lap['total']
         }
         act_totals[f'act{self.lap["lapact"]}']["laps"].append(lap)
-        # getattr(act_totals, "act" + self.lap["lapact"])["laps"].append(lap)
-        self.lap.update({"lapnum" : self.lap["lapnum"] + 1})
+        self.lap.update({"lapnum" : self.lap["lapnum"] + 1,
+                         "lapact" : None,
+                         "start" : None,
+                         "stop" : None,
+                         "total" : None})
+        print(self.lap["lapact"], lap)
+        print(self.lap)
+        return
 
     def timer(self, *args):
-        if getattr(self.ids, "act" + self.lap["lapact"]).state == 'down':
+        if getattr(self.ids, "but" + self.lap["lapact"]).state == 'down':
             self.lap.update({"total" : time.time() - self.lap["start"]})
-            tots_obj = json.dumps(act_totals, indent=2)
-            print(tots_obj)
             getattr(self.ids, "act" + self.lap["lapact"]).text = str(self.convert_time(self.lap["total"]))
-        elif getattr(self.ids, "act" + self.lap["lapact"]).state == 'normal':
-            self.log_lap(self.lap["lapact"])
-
 
     def convert_time(self, sec):
         mins = sec // 60
@@ -100,7 +91,6 @@ class MyApp(App):
         self.root.ids.clock_time.text = strftime_output
 
     def build(self):
-        # return LoginScreen()
         return MainDisplay()
     
 if __name__ == '__main__':
