@@ -10,7 +10,9 @@ from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
-
+# Data Viz imports
+import matplotlib.pyplot as plt 
+import numpy as np
 # General Imports
 import json
 
@@ -41,9 +43,12 @@ class MainDisplay(Widget):
     def act(self, act):
         if self.lap['lapact'] != None:
             self.log_lap(self.lap['lapact'])
-        self.lap.update({"start" : time.time()})
-        self.lap.update({"lapact" : act})
-        self.event = Clock.schedule_interval(self.timer, 1)
+        if getattr(self.ids, 'but' + act).state == 'normal':
+            pass
+        else:
+            self.lap.update({"start" : time.time()})
+            self.lap.update({"lapact" : act})
+            self.event = Clock.schedule_interval(self.timer, 1)
 
     def log_lap(self, act):
         self.event.cancel()
