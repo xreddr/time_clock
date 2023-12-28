@@ -14,7 +14,7 @@
         size: root.width, root.height
         GridLayout:
             rows:2
-            size_hint: root.width * 0.8, root.height
+            size_hint: root.width * 0.82, root.height
             FloatLayout:
                 Image:
                     id: gif
@@ -23,23 +23,26 @@
                     allow_stretch: True
                     keep_ratio: False
                     anim_delay: 0.3
-                # Row
-                Label:
-                    id: clock_time
-                    font_size: 90
-                    color: 0,0,0,1
+                GridLayout:
+                    rows:2
+                    size: self.width, self.height
+                    # Row
+                    Label:
+                        id: clock_time
+                        font_size: 90
+                        color: 0,0,0,1
 
-                # Row
-                Label:
-                    id: clock_viz
-                    text: "Boring"
-                    # size_hint: (1, 1.8)
+                    # Row
+                    Label:
+                        id: clock_viz
+                        text: "Boring"
+                        size_hint: (1, 1.8)
 
         GridLayout:
             cols: 1
             rows: 4
             # Row
-            size_hint: root.width * 0.2, root.height
+            size_hint: root.width * 0.18, root.height
             ToggleButton:
                 id: act1
                 size: self.height, self.height
@@ -48,9 +51,9 @@
                 group: 'act'
                 text: ""
                 font_size: 16
-                background_color: (0,0,1,1) if self.state == 'normal' else (1,0,0,1)
-                background_normal: ""
-                background_down: ""
+                # background_color: (0,0,1,1) if self.state == 'normal' else (1,0,0,1)
+                background_normal: "comm_off.png"
+                background_down: "comm_on.png"
                 on_press: root.act("1")
 
             ToggleButton:
@@ -61,9 +64,9 @@
                 group: 'act'
                 text: ""
                 font_size: 16
-                background_color: (0,0,1,1) if self.state == 'normal' else (1,0,0,1)
-                background_normal: ""
-                background_down: ""
+                # background_color: (0,0,1,1) if self.state == 'normal' else (1,0,0,1)
+                background_normal: "prod_off.png"
+                background_down: "prod_on.png"
                 on_press: root.act("2")
 
         # Row
@@ -75,9 +78,9 @@
                 group: 'act'
                 text: ""
                 font_size: 16
-                background_color: (0,0,1,1) if self.state == 'normal' else (1,0,0,1)
-                background_normal: ""
-                background_down: ""
+                # background_color: (0,0,1,1) if self.state == 'normal' else (1,0,0,1)
+                background_normal: "mag_off.png"
+                background_down: "mag_on.png"
                 on_press: root.act("3")
 
             ToggleButton:
@@ -88,10 +91,8 @@
                 group: 'act'
                 text: ""
                 font_size: 16
-                background_color: (0,0,1,1) if self.state == 'normal' else (1,0,0,1)
-                background_normal: ""
-                background_down: ""
+                # background_color: (0,0,1,1) if self.state == 'normal' else (1,0,0,1)
+                background_normal: "org_off.png"
+                background_down: "org_on.png"
                 on_press: root.act("4")
 
-
-        
