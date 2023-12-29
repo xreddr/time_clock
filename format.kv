@@ -24,21 +24,30 @@
 
                     # Row
                     GridLayout:
-                        cols: 4
+                        cols: 2
                         rows: 1
                         size_hint: (1, 1.8)
-                        Label:
-                            id: act1
-                            text: ""
-                        Label:
-                            id: act2
-                            text: ""
-                        Label:
-                            id: act3
-                            text: ""
-                        Label:
-                            id: act4
-                            text: ""
+                        Image:
+                            id: pie
+                            source: ''
+                            size: root.size
+                            allow_stretch: True
+                            keep_ratio: True
+                        GridLayout:
+                            cols: 1
+                            rows: 4
+                            Label:
+                                id: act1
+                                text: ""
+                            Label:
+                                id: act2
+                                text: ""
+                            Label:
+                                id: act3
+                                text: ""
+                            Label:
+                                id: act4
+                                text: ""
                             
 
         GridLayout:
